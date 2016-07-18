@@ -1,5 +1,5 @@
 {
-    "name": "gointegro/hateoas-bundle",
+    "name": "lendable/hateoas-bundle",
     "type": "symfony-bundle",
     "description": "GOintegro HATEOAS Bundle",
     "keywords": ["Doctrine", "HATEOAS", "REST", "API", "JSON-API"],
