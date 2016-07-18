@@ -14,6 +14,7 @@ use GoIntegro\Bundle\HateoasBundle\JsonApi\Request\Parser as RequestParser;
 // JSON-API.
 use GoIntegro\Bundle\HateoasBundle\JsonApi\Request\Params;
 // Security.
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class SerializerFactory implements Factory
@@ -56,12 +57,12 @@ class SerializerFactory implements Factory
 
     /**
      * @param ResourceCache $resourceCache
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $securityContext
      * @param string $apiUrlPath
      */
     public function __construct(
         ResourceCache $resourceCache,
-        SecurityContextInterface $securityContext,
+        AuthorizationCheckerInterface $securityContext,
         $apiUrlPath = ''
     )
     {

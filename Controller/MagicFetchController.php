@@ -207,7 +207,7 @@ class MagicFetchController extends SymfonyController
         $resources = NULL;
         $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
         $filter = function(ResourceEntityInterface $entity) {
-            return $this->get('security.context')->isGranted('view', $entity);
+            return $this->get('security.authorization_checker')->isGranted('view', $entity);
         };
         $entities = $this->get('hateoas.repo_helper')
             ->findByRequestParams($params)

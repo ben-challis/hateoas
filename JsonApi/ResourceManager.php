@@ -13,6 +13,7 @@ use GoIntegro\Bundle\HateoasBundle\Metadata\Resource\MetadataMinerInterface
 // DI.
 use Symfony\Component\DependencyInjection\ContainerInterface;
 // Security.
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class ResourceManager
@@ -49,7 +50,7 @@ class ResourceManager
         MetadataMiner $metadataMiner,
         ResourceCache $resourceCache,
         ContainerInterface $serviceContainer,
-        SecurityContextInterface $securityContext,
+        AuthorizationCheckerInterface $securityContext,
         $apiUrlPath = ''
     )
     {

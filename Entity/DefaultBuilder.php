@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface,
 use Symfony\Component\Validator\Validator\ValidatorInterface,
     Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 // Security.
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class DefaultBuilder implements AbstractBuilderInterface
@@ -36,19 +37,19 @@ class DefaultBuilder implements AbstractBuilderInterface
      */
     private $validator;
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
     private $securityContext;
 
     /**
      * @param EntityManagerInterface $em
      * @param ValidatorInterface $validator
-     * @param SecurityContextInterface $securityContext
+     * @param TokenStorageInterface $securityContext
      */
     public function __construct(
         EntityManagerInterface $em,
         ValidatorInterface $validator,
-        SecurityContextInterface $securityContext
+        TokenStorageInterface $securityContext
     )
     {
         $this->em = $em;

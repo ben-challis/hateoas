@@ -15,6 +15,7 @@ use GoIntegro\Bundle\HateoasBundle\Util\Inflector;
 use GoIntegro\Bundle\HateoasBundle\JsonApi\DocumentResource,
     GoIntegro\Bundle\HateoasBundle\JsonApi\EntityResource;
 // Security.
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class ResourceObjectSerializer implements SerializerInterface
@@ -38,7 +39,7 @@ class ResourceObjectSerializer implements SerializerInterface
      */
     public function __construct(
         DocumentResource $resource,
-        SecurityContextInterface $securityContext,
+        AuthorizationCheckerInterface $securityContext,
         array $sparseFields = []
     )
     {

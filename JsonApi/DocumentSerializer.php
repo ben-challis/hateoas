@@ -14,6 +14,7 @@ use GoIntegro\Bundle\HateoasBundle\JsonApi\Serializer\TopLevelLinksSerializer,
     GoIntegro\Bundle\HateoasBundle\JsonApi\Serializer\LinkedResourcesSerialization,
     GoIntegro\Bundle\HateoasBundle\JsonApi\Serializer\MetadataSerializer;
 // Security.
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class DocumentSerializer
@@ -31,12 +32,12 @@ class DocumentSerializer
 
     /**
      * @param Document $document
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $securityContext
      * @param string $apiUrlPath
      */
     public function __construct(
         Document $document,
-        SecurityContextInterface $securityContext,
+        AuthorizationCheckerInterface $securityContext,
         $apiUrlPath = ''
     )
     {

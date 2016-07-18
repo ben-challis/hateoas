@@ -10,6 +10,8 @@ namespace GoIntegro\Bundle\HateoasBundle\JsonApi\Request;
 // ORM.
 use Doctrine\ORM\EntityManagerInterface;
 // Security.
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 // JSON-API.
 use GoIntegro\Bundle\HateoasBundle\JsonApi\ResourceEntityInterface;
@@ -48,11 +50,11 @@ class ParamEntityFinder
 
     /**
      * @param EntityManagerInterface $em
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $securityContext
      */
     public function __construct(
         EntityManagerInterface $em,
-        SecurityContextInterface $securityContext
+        AuthorizationCheckerInterface $securityContext
     )
     {
         $this->em = $em;
