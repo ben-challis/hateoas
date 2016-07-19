@@ -9,6 +9,7 @@ namespace GoIntegro\Bundle\HateoasBundle\Controller;
 
 // Controladores.
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as SymfonyController;
+use Symfony\Component\HttpFoundation\Request;
 // Request.
 use GoIntegro\Bundle\HateoasBundle\JsonApi\Request\Params;
 // JSON-API.
@@ -25,7 +26,7 @@ abstract class Controller extends SymfonyController
      * @param Params $params
      * @return \GoIntegro\Bundle\HateoasBundle\JsonApi\DocumentResource
      */
-    protected function getResourcesFromRepo(Params $params)
+    protected function getResourcesFromRepo(Params $params, Request $request)
     {
         $entities = $this->get('hateoas.repo_helper')
             ->findByRequestParams($params);
@@ -36,7 +37,7 @@ abstract class Controller extends SymfonyController
 
         $resources = $this->get('hateoas.resource_manager')
             ->createCollectionFactory()
-            ->setRequest($this->getRequest())
+            ->setRequest($request)
             ->setPaginator($entities->getPaginator())
             ->create();
 

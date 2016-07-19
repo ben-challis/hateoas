@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as SymfonyController,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 // HTTP.
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException,
+    Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\JsonResponse;
 // JSON-API.
 use GoIntegro\Bundle\HateoasBundle\JsonApi\Merge\UnmergeableResourcesException;
@@ -27,11 +28,11 @@ class MultiController extends SymfonyController
      * @Route("/multi", name="hateoas_multi_get", methods="GET")
      * @todo Integrar las respuestas de verdad, no con "array_merge_recursive".
      */
-    public function multiGetAction()
+    public function multiGetAction(Request $request)
     {
         $blend = [];
 
-        foreach ($this->getRequest()->query->get('url') as $url) {
+        foreach ($request->query->get('url') as $url) {
             $json = $this->get('templating.helper.actions')
                 ->render(urldecode($url));
             $json = $this->get('hateoas.json_coder')->decode($json);

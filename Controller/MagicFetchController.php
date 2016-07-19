@@ -10,7 +10,8 @@ namespace GoIntegro\Bundle\HateoasBundle\Controller;
 // Controladores.
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as SymfonyController,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Symfony\Component\HttpFoundation\JsonResponse;
+    Symfony\Component\HttpFoundation\JsonResponse,
+    Symfony\Component\HttpFoundation\Request;
 // Colecciones.
 use Doctrine\Common\Collections\Collection;
 // HTTP.
@@ -55,10 +56,10 @@ class MagicFetchController extends SymfonyController
      * @see http://jsonapi.org/format/#urls-relationships
      * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14
      */
-    public function getRelationAction($primaryType, $id, $relationship)
+    public function getRelationAction($primaryType, $id, $relationship, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -95,7 +96,7 @@ class MagicFetchController extends SymfonyController
                 ->create()
                 ->serialize();
 
-        return $this->createETagResponse($json);
+        return $this->createETagResponse($json, 200, [], $request);
     }
 
     /**
@@ -107,10 +108,10 @@ class MagicFetchController extends SymfonyController
      * @throws NotFoundHttpException
      * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14
      */
-    public function getFieldAction($primaryType, $id, $field)
+    public function getFieldAction($primaryType, $id, $field, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -138,7 +139,7 @@ class MagicFetchController extends SymfonyController
             throw new NotFoundHttpException(self::ERROR_FIELD_NOT_FOUND);
         }
 
-        return $this->createETagResponse($json);
+        return $this->createETagResponse($json, 200, [], $request);
     }
 
     /**
@@ -146,10 +147,10 @@ class MagicFetchController extends SymfonyController
      * @param string $primaryType
      * @param string $ids
      */
-    public function getByIdsAction($primaryType, $ids)
+    public function getByIdsAction($primaryType, $ids, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -180,7 +181,7 @@ class MagicFetchController extends SymfonyController
             ->create()
             ->serialize();
 
-        return $this->createETagResponse($json);
+        return $this->createETagResponse($json, 200, [], $request);
     }
 
     /**
@@ -190,10 +191,10 @@ class MagicFetchController extends SymfonyController
      * @throws DocumentTooLargeHttpException
      * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14
      */
-    public function getWithFiltersAction($primaryType)
+    public function getWithFiltersAction($primaryType, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -205,7 +206,7 @@ class MagicFetchController extends SymfonyController
         }
 
         $resources = NULL;
-        $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+        $params = $this->get('hateoas.request_parser')->parse($request);
         $filter = function(ResourceEntityInterface $entity) {
             return $this->get('security.authorization_checker')->isGranted('view', $entity);
         };
@@ -234,6 +235,6 @@ class MagicFetchController extends SymfonyController
             ->create()
             ->serialize();
 
-        return $this->createETagResponse($json);
+        return $this->createETagResponse($json, 200, [], $request);
     }
 }

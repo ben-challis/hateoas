@@ -10,7 +10,8 @@ namespace GoIntegro\Bundle\HateoasBundle\Controller;
 // Controladores.
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as SymfonyController,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Symfony\Component\HttpFoundation\JsonResponse;
+    Symfony\Component\HttpFoundation\JsonResponse,
+    Symfony\Component\HttpFoundation\Request;
 // Colecciones.
 use Doctrine\Common\Collections\Collection;
 // HTTP.
@@ -64,10 +65,10 @@ class MagicAlterController extends SymfonyController
      * @see http://jsonapi.org/format/#crud-updating-relationships
      * @todo The 409 response should happend during parsing.
      */
-    public function linkAction($primaryType, $id, $relationship, $ids = NULL)
+    public function linkAction($primaryType, $id, $relationship, $ids = NULL, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -119,10 +120,10 @@ class MagicAlterController extends SymfonyController
      * @todo Support multi-create.
      * @todo Rollback everything if anything goes wrong.
      */
-    public function createAction($primaryType)
+    public function createAction($primaryType, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -193,10 +194,10 @@ class MagicAlterController extends SymfonyController
      * @see http://jsonapi.org/format/#crud-updating
      * @todo Rollback everything if anything goes wrong.
      */
-    public function updateAction($primaryType, $ids)
+    public function updateAction($primaryType, $ids, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {
@@ -267,10 +268,10 @@ class MagicAlterController extends SymfonyController
      * @see http://jsonapi.org/format/#crud-deleting
      * @todo Rollback everything if anything goes wrong.
      */
-    public function deleteAction($primaryType, $ids)
+    public function deleteAction($primaryType, $ids, Request $request)
     {
         try {
-            $params = $this->get('hateoas.request_parser')->parse($this->getRequest());
+            $params = $this->get('hateoas.request_parser')->parse($request);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage(), $e);
         } catch (ActionNotAllowedException $e) {

@@ -9,6 +9,7 @@ namespace GoIntegro\Bundle\HateoasBundle\Controller;
 
 // Controladores.
 use GoIntegro\Bundle\HateoasBundle\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * An abstract controller that custom JSON-API controllers can extend.
@@ -23,13 +24,13 @@ trait CommonResponseTrait
      * @see http://jsonapi.org/format/#http-caching
      */
     protected function createETagResponse(
-        $content, $status = 200, array $headers = []
+        $content, $status = 200, array $headers = [], Request $request = null
     )
     {
         $response = new JsonResponse($content, $status, $headers);
         $response->setETag(md5($response->getContent()));
         $response->setPublic();
-        $response->isNotModified($this->getRequest());
+        $response->isNotModified($request);
 
         return $response;
     }
