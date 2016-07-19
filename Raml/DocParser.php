@@ -42,7 +42,7 @@ class DocParser
      */
     public function parse($filePath)
     {
-        $rawRaml = Yaml::parse($filePath);
+        $rawRaml = Yaml::parse(file_get_contents($filePath));
         $ramlDoc = new RamlDoc($rawRaml, $filePath);
 
         if (isset($rawRaml['schemas'])) {
