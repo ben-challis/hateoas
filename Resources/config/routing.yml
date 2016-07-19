@@ -1,5 +1,5 @@
 muggle:
-    resource: @GoIntegroHateoasBundle/Controller
+    resource: "@GoIntegroHateoasBundle/Controller"
     type: annotation
 
 # Tiene que ir abajo de todo - tiene un action catch-all
