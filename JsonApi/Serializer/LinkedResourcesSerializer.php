@@ -18,6 +18,7 @@ use GoIntegro\Bundle\HateoasBundle\JsonApi\ResourceEntityInterface,
 use GoIntegro\Bundle\HateoasBundle\Metadata\Resource\ResourceRelationship;
 // Security.
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class LinkedResourcesSerializer implements SerializerInterface
 {
@@ -39,7 +40,7 @@ class LinkedResourcesSerializer implements SerializerInterface
      */
     public function __construct(
         Document $document,
-        SecurityContextInterface $securityContext
+        AuthorizationChecker $securityContext
     )
     {
         $this->document = $document;
